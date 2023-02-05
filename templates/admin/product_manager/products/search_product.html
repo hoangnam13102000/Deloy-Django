@@ -1,0 +1,121 @@
+{% extends 'admin/base.html' %} 
+{% load static %} 
+{% block main %}
+<div class="main-panel">
+  <div class="content">
+    <div class="page-inner">
+      <div class="page-header">
+        <ul class="breadcrumbs">
+          <li class="nav-home">
+            <a href="{% url 'admin' %}">
+              <i class="flaticon-home"></i>
+            </a>
+          </li>
+          <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+          <a data-toggle="collapse" href="#product_manager">Quản lý sản phẩm</a>
+      </li>
+          <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+          <a  href="{% url 'product_list' %}">Danh sách sản phẩm</a>
+      </li>
+          <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Tìm kiếm</em></a>
+          </li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="table-responsive">
+                <div class="d-flex align-items-center">
+                  <h4 class=" text-uppercase card-title">
+                    Tìm kiếm sản phẩm theo '<em>{{request.GET.search_type}}</em> ' với từ khóa:  '<em>{{request.GET.keyword}}</em> ' 
+                  </h4>
+                </div>
+            </div>
+            <div class="card-body">
+              <form action="{% url 'search_product_admin' %}" >
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <h4 class=" text-uppercase ">
+                            Tìm kiếm theo:
+                      </h4>
+                    </div>
+                    <div class="col-md-8">
+                      {{search_form.search_type}}
+                    </div>
+                </div>
+              </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                  
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search search-icon"></i></span>
+                      </div>
+                      <input  name="keyword" type="text" placeholder="Tìm kiếm..." class="form-control" >
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                      </span>
+                    </div>
+                </div>
+            </form>
+                <div class="table-responsive">
+                  <table
+                    id="add-row"
+                    class="display table table-striped table-hover"
+                  >
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Hình sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Loại sản phẩm</th>
+                        <th>Hãng</th>
+                        <th>Giá sản phẩm</th>
+                        <th>Mô tả</th>
+                        {% comment %} <th>Active</th> {% endcomment %}
+                        <th style="width: 13%">Tùy chọn</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in  data  %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><img src="/home/media/{{ product.image }}" alt="..." class="img" style="width: 100px; height: 100px;"></td>
+                <td>{{ product.title }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.brand }}</td>
+                <td>{{ product.price }} VNĐ</td>
+                <td>{{ product.description }}</td>
+                {% comment %} <td>{{ product.is_active }}</td> {% endcomment %}
+                <td><a href="{% url 'edit_product' product.id %}" class="btn btn-info"><span class=" glyphincon glyphicon-pencil">Sửa </span> </a>
+                    <a href="{% url 'delete_product' product.id %}" class="btn btn-danger" onclick=" return confirm('Bạn có chắc chắn muốn xóa?');">
+                        Xóa </i></a>
+                </td>
+             </tr> 
+        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

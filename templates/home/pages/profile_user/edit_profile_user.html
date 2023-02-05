@@ -1,0 +1,58 @@
+{% extends 'home/base.html' %}
+{% block main %}
+<div class="wrapper">
+    <div class="container justify-content-around">
+      <ul class="breadcrumb">
+        <li><a href="{% url 'home' %}">Trang chủ</a></li>
+        <li><a href="{% url 'profile_user' user.id %}">Hồ sơ {{request.user}}</a></li>
+        <li><a href="{% url 'edit_profile_user' user.id %}">Cập nhập thông tin {{request.user}}</a></li>
+    </ul>
+        <div class="row">
+          <div class="col-md-3">
+          </div>
+            <form action="{{'.'}}" class="col-md-6 bg-light p-3" method="POST" enctype="multipart/form-data">  {% comment %} 'enctype="multipart/form-data' Required when uploading files {% endcomment %}
+              {% csrf_token %}
+              <h1 class="text-center text-uppercase h3">thông tin {{request.user}}</h1>
+              {% if request.user.is_staff %}
+              <div class="form-group">
+                <label for="">Ảnh đại diện</label>
+                {{ form.image}}
+            </div>
+            
+              {% endif %}
+              <div class="form-group">
+                <label for="">Họ và tên</label>
+                {{ form.fullname}}
+            </div>
+              <div class="form-group">
+                  <label for="">Tên Tài Khoản</label>
+                  {{ form.username}}
+              </div>
+              <div class="form-group">
+                <label for="">Email</label>
+                {{ form.email}}
+            </div>
+            <div class="form-group">
+              <label for="">Giới tính</label>
+              {{ form.gender}}
+          </div>
+          <div class="form-group">
+            <label for="">Số điện thoại</label>
+            {{ form.phone}}
+        </div>
+            <div class="form-group">
+              <label for="">Địa chỉ</label>
+              {{ form.address}}
+          </div>
+                <div class="form-group ">
+                  <input type="submit" value="Lưu" class="btn btn-block btn-primary">
+                  <a href="{% url 'profile_user' user.id %}" class="btn btn-block btn-primary">Quay lại</a>
+              </div>
+              
+            </form>
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+  </div>
+{% endblock %}

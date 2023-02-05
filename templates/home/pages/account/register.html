@@ -1,0 +1,41 @@
+{% extends 'home/base.html' %}
+{% block main %}
+
+<div id="wrapper">
+    <div class="container justify-content-around">
+      <ul class="breadcrumb">
+        <li><a href="{% url 'home' %}">Trang chủ</a></li>
+        <li><a href="{% url 'register' %}">Đăng ký</a></li>
+    </ul>
+        <div class="row">
+          <div class="col-md-3">
+          </div>
+            <form action="{{'.'}}" class="col-md-6 bg-light p-3 " method="POST" >
+              {% csrf_token %}
+                <h1 class="text-center text-uppercase h3">Đăng Ký</h1>
+                <div class="form-group">
+                  <label for="">Email</label>
+                  {{ form.email}}
+              </div>
+                <div class="form-group">
+                    <label for="">Tên Tài Khoản</label>
+                    {{ form.username}}
+                </div>
+                <div class="form-group">
+                    <label for="">Mật Khẩu</label>
+                    {{ form.password}}
+                </div>
+                <div class="form-group">
+                  <label for="">Xác nhận mật khẩu</label>
+                  {{ form.password2}}
+              </div>
+              <div class="form-group"> 
+                  <input type="submit" value="Đăng Ký" class="btn-primary btn btn-block ">
+                </div>
+            </form>
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+  </div>
+{% endblock %}

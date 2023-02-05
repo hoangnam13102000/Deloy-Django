@@ -1,0 +1,107 @@
+{% extends 'admin/base.html' %} 
+{% load static %} 
+{% block main %}
+<div class="main-panel">
+  <div class="content">
+  <div class="page-inner">
+  <div class="page-header">
+      <h4 class="page-title">Chào mừng {{request.user}}</h4>
+      <ul class="breadcrumbs">
+          <li class="nav-home">
+              <a href="{% url 'admin' %}">
+                  <i class="flaticon-home"></i>
+              </a>
+          </li>
+  </div>
+<table class="table">
+    <h1 class="text-center text-uppercase h3">Danh sách khách hàng</h1>
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên khách hàng</th>
+            <th>Giới tính</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in  page_obj %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ customer.fullname }}</td>
+                <td>{{ customer.gender }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.username }}</td>
+                <td>{{ customer.password}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<nav aria-label="...">
+    <ul class="pagination justify-content-center ">
+        {% if page_obj.has_previous %}
+      <li class="page-item step-links">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"> << </a>
+      </li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a></li>
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}"> >> </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+<table class="table">
+    <h1 class="text-center text-uppercase h3">Danh sách sản phẩm</h1>
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Hình sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Loại sản phẩm</th>
+            <th>Giá sản phẩm</th>
+            <th>Mô tả</th>
+            {% comment %} <th>Active</th> {% endcomment %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in  page_obj1 %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><img src="/home/media/{{ product.image }}" alt="..." class="img" style="width: 100px; height: 100px;"></td>
+                <td>{{ product.title }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.price }} VNĐ</td>
+                <td>{{ product.description }}</td>
+                {% comment %} <td>{{ product.is_active }}</td> {% endcomment %}
+             </tr> 
+        {% endfor %}
+    </tbody> 
+</table>
+<nav aria-label="...">
+    <ul class="pagination justify-content-center ">
+        {% if page_obj1.has_previous %}
+      <li class="page-item step-links">
+        <a class="page-link" href="?page={{ page_obj1.previous_page_number }}"> << </a>
+      </li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="#">{{ page_obj1.number }} / {{ page_obj1.paginator.num_pages }}</a></li>
+      {% if page_obj1.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj1.next_page_number }}"> >> </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+</div>
+</div>
+
+{% endblock %}

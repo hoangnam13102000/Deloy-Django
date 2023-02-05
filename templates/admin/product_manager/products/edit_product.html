@@ -1,0 +1,143 @@
+{% extends 'admin/base.html' %} 
+{% load static %} 
+{% block main %}
+<div class="main-panel">
+  <div class="content">
+    <div class="page-inner">
+      <div class="page-header">
+        <ul class="breadcrumbs">
+          <li class="nav-home">
+            <a href="{% url 'admin' %}">
+              <i class="flaticon-home"></i>
+            </a>
+          </li>
+          <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+          <a data-toggle="collapse" href="#product_manager">Quản lý sản phẩm</a>
+      </li>
+          <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'product_list' %}">Danh sách sản phẩm</a>
+          </li>
+          <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+          </li>
+          <li class="nav-item">
+            <a href="{{'.'}}">Cập nhập sản phẩm </a>
+          </li>
+          <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+          </li>
+          <li class="nav-item">
+            <a href="{{'.'}}"> {{ product.title }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <center><b> Cập nhập sản phẩm </b></center>
+              </div>
+            </div>
+            <div class="card-body">
+              <form action="{{'.'}}" method="POST" enctype="multipart/form-data">  {% comment %} 'enctype="multipart/form-data' Required when uploading files {% endcomment %}
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="email">Hình sản phẩm</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-image"></i></span>
+                            </div>
+                            {{ form.image}} 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullname">Tên sản phẩm</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-box-open"></i></span>
+                            </div>
+                            {{ form.title}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Loại sản phẩm</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-boxes"></i></span>
+                            </div>
+                            {{ form.category}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Hãng</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fab fa-uikit"></i></span>
+                            </div>
+                            {{ form.brand}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6">				
+                    <div class="form-group">
+                      <label for="">Giá sản phẩm</label>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-dollar-sign"></i></span>
+                        </div>
+                        {{ form.price}}
+                    </div>
+                  </div>
+                      <div class="form-group">
+                        <label for="">Mô tả</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-book"></i></span>
+                            </div>
+                            {{ form.description}}
+                        </div>
+                       
+                    </div>
+                    <div class="form-group">
+                        <label for="">Hoạt động</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="flaticon-check"></i></span>
+                            </div>
+                            {{ form.is_active}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="">Chiến lược</label>
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1"><i class="flaticon-check"></i></span>
+                          </div>
+                          {{ form.featured}}
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" value="Lưu" class="btn-success btn" />
+                    <a href="{% url 'product_list' %}" class="btn btn-primary"
+                      >Quay lại</a
+                    >
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>

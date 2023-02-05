@@ -1,0 +1,77 @@
+{% extends 'home/base.html' %} 
+{% load static %}
+{% block main %}
+<div class="main">
+    <div class="container">
+      <ul class="breadcrumb">
+          <li><a href="{% url 'home' %}">Trang chủ</a></li>
+          <li class="active">Liên hệ</li>
+      </ul>
+      <!-- BEGIN SIDEBAR & CONTENT -->
+      <div class="row margin-bottom-40">
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar col-md-3 col-sm-3">
+          <ul class="list-group margin-bottom-25 sidebar-menu">
+            {% for item in  categories %}
+            <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> {{item.name}}</a></li>
+            {% endfor %}
+          </ul>
+
+          <h2>LIÊN HỆ VỚI CHÚNG TÔI</h2>
+          <address>
+            Hồ Chí Minh: 104 Hai Bà Trưng, Bến Nghé, Quận 1, TP.HCM<br>
+            <abbr title="Phone">P:</abbr> 09699173699<br>
+          </address>
+          <address>
+            Hà Nội: Tầng 12, Tòa nhà Ladeco, 266 Đội Cấn, Phường Liễu Giai, Quận Ba Đình, TP. Hà Nội<br>
+            <abbr title="Phone">P:</abbr> 0316376256<br>
+          </address>
+          <address>
+            <strong>Email</strong><br>
+            <a href="mailto:info@metronic.com">info@metronic.com</a><br>
+            <a href="mailto:support@metronic.com">support@metronic.com</a>
+          </address>
+          <ul class="social-icons margin-bottom-10">
+            <li><a href="javascript:;" data-original-title="facebook" class="facebook"></a></li>
+            <li><a href="javascript:;" data-original-title="github" class="github"></a></li>
+            <li><a href="javascript:;" data-original-title="Goole Plus" class="googleplus"></a></li>
+            <li><a href="javascript:;" data-original-title="linkedin" class="linkedin"></a></li>
+            <li><a href="javascript:;" data-original-title="rss" class="rss"></a></li>
+          </ul>
+        </div>
+        <!-- END SIDEBAR -->
+
+        <!-- BEGIN CONTENT -->
+        <div class="col-md-9 col-sm-9">
+          <h1>Liên hệ</h1>
+          <div class="content-page">
+            <div id="map" class="gmaps margin-bottom-40" style="height:400px;"> <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3676868979983!2d106.69589041531616!3d10.783125262017405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4bd4401fd5%3A0xf84ae553d594a952!2sFarmers%20Market!5e0!3m2!1svi!2s!4v1673177848878!5m2!1svi!2s" width="800px" height="400px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+
+            <h2>Bạn cần hỗ trợ?</h2>
+            <p>Chúng tôi rất hân hạnh được hỗ trợ bạn, hãy để lại thông tin cho chúng tôi nhé. Yêu cầu của bạn sẽ được xử lý và phản hồi trong thời gian sớm nhất.</p>
+            
+            <!-- BEGIN FORM-->
+            <form action="{{'.'}}" method="POST" class="default-form" role="form">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="name">Họ tên</label>
+                {{ form.customer_name}}
+              </div>
+              <div class="form-group">
+                <label for="email" >Email <span class="require">*</span></label>
+                {{ form.customer_email}}
+              </div>
+              <div class="form-group">
+                <label for="message" >Tin nhắn</label>
+                {{ form.content}}
+              </div>
+              <div class="padding-top-20">                  
+                <button type="submit" class="btn btn-primary">Gửi</button>
+              </div>
+            </form>
+            <!-- END FORM-->          
+          </div>
+        </div>
+        <!-- END CONTENT -->
+      </div>
+{% endblock %}

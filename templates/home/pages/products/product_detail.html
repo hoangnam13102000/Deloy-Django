@@ -1,0 +1,192 @@
+{% extends 'home/base.html' %}
+{% load static %} 
+{% block main %}
+  <link href="{% static 'assets/plugins/rateit/src/rateit.css' %}" rel="stylesheet" type="text/css">
+  <div class="main">
+    <div class="container">
+      <ul class="breadcrumb">
+          <li><a href="{% url 'home' %}">Trang chủ</a></li>
+          <li><a href="{% url 'product_of_category' product.category.id %}">{{product.category}}</a></li>
+          <li class="active">{{product.title}}</li>
+      </ul>
+      <!-- BEGIN SIDEBAR & CONTENT -->
+      <div class="row margin-bottom-40">
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar col-md-3 col-sm-5">
+          <ul class="list-group margin-bottom-25 sidebar-menu">
+            {% for item in  categories %}
+            <li class="list-group-item clearfix"><a href="{% url 'product_of_category' item.id %}"><i class="fa fa-angle-right"></i>{{item.name}}</a></li>
+            {% endfor %}
+        </div>
+        
+        <!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="col-md-9 col-sm-7">
+    <div class="product-page">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="product-main-image">
+            <img src="{{ product.image.url }}" alt="Cool green dress with red bell" class="img-responsive" data-BigImgsrc="{{ product.image.url }}">
+          </div>
+          <div class="product-other-images">
+            <a href="#" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="{{ product.image.url }}"></a>
+            <a href="#" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="{{ product.image.url }}"></a>
+            <a href="#" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="{{ product.image.url }}"></a>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <h1>Tên sản phẩm: {{ product.title }}</h1>
+          <div class="price-availability-block clearfix">
+            <div class="price">
+              <strong>Giá: {{ product.price }} VNĐ</strong>
+              <em><span>{{ product.price }} VNĐ</span></em>
+            </div>
+            <div class="availability">
+              Hãng: <strong>{{product.brand}}</strong>
+            </div>
+          </div>
+          <div class="description">
+            <p>Mô tả: {{ product.description }}</p>
+          </div>
+          <div class="product-page-options">
+          </div>
+          {% comment %} <form action="{% url 'add_to_cart' product.id %}" method="POST" >
+            {% csrf_token %} {% endcomment %}
+          <div class="product-page-cart">
+            <div class="product-quantity">
+                <input id="number" name="quantity" type="text" value="1"  class="form-control input-sm">
+            </div>
+            <a  href="{% url 'add_to_cart' product.id %}" class="btn btn-primary add2cart">Mua sản phẩm <i class="fa fa-shopping-cart"></i> </a>
+            {% comment %} <button class="btn btn-primary" type="submit" onclick="addCart({{ product.id }})"><i class="fa fa-shopping-cart"></i> Mua sản phẩm</button> {% endcomment %}
+          </div>
+        {% comment %} </form> {% endcomment %}
+          <div class="review">
+            <input type="range" value="4" step="0.25" id="backing4">
+            <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
+            </div>
+            <a href="#reviews-item">7 bình luận</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#reviews-form">Viết 1 bình luận</a>
+          </div>
+          <ul class="social-icons">
+            <li><a class="facebook" data-original-title="facebook" href="javascript:;"></a></li>
+            <li><a class="twitter" data-original-title="twitter" href="javascript:;"></a></li>
+            <li><a class="googleplus" data-original-title="googleplus" href="javascript:;"></a></li>
+            <li><a class="evernote" data-original-title="evernote" href="javascript:;"></a></li>
+            <li><a class="tumblr" data-original-title="tumblr" href="javascript:;"></a></li>
+          </ul>
+        </div>
+
+        <div class="product-page-content">
+          <ul id="myTab" class="nav nav-tabs">
+            <li><a href="#Description" data-toggle="tab">Mô tả</a></li>
+            <li><a href="#Information" data-toggle="tab">Thông tin sản phẩm</a></li>
+            <li class="active"><a href="#Reviews" data-toggle="tab">Bình luận (2)</a></li>
+          </ul>
+          <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade" id="Description">
+              <p>{{ product.description }}</p>
+            </div>
+            <div class="tab-pane fade" id="Information">
+              <table class="datasheet">
+                <tr>
+                  <th colspan="2">Additional features</th>
+                </tr>
+                <tr>
+                  <td class="datasheet-features-type">Value 1</td>
+                  <td>21 cm</td>
+                </tr>
+                <tr>
+                  <td class="datasheet-features-type">Value 2</td>
+                  <td>700 gr.</td>
+                </tr>
+                <tr>
+                  <td class="datasheet-features-type">Value 3</td>
+                  <td>10 person</td>
+                </tr>
+                <tr>
+                  <td class="datasheet-features-type">Value 4</td>
+                  <td>14 cm</td>
+                </tr>
+                <tr>
+                  <td class="datasheet-features-type">Value 5</td>
+                  <td>plastic</td>
+                </tr>
+              </table>
+            </div>
+            <div class="tab-pane fade in active" id="Reviews">
+              <!--<p>There are no reviews for this product.</p>-->
+              <div class="review-item clearfix">
+                {% for item in  comments %}
+                <div class="review-item-submitted" id="reviews-item">
+                  <strong>{{item.commenter_name}}</strong>
+                  <em>{{item.date_added}}</em>
+                  <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+                </div>                                              
+                <div class="review-item-content">
+                    <p>{{item.comment_body}}</p>
+                </div>
+              {% endfor %}
+
+              <!-- BEGIN FORM-->
+              <form action="{% url 'product_detail' product.id %}" id="comment-form" class="comment-form" role="form" method="POST">
+                {% csrf_token %}
+                <h2>Viết nhận xét</h2>
+                <div class="form-group ">
+                  <label for="name">Họ và tên <span class="require">*</span></label>
+                  {{form.commenter_name}}
+                </div>
+                <div class="form-group">
+                  <label for="email">Email  <span class="require">*</span></label>
+                  {{form.commenter_email}}
+                </div>
+                <div class="form-group">
+                  <label for="review">Bình luận <span class="require">*</span></label>
+                  {{form.comment_body}}
+                </div>
+                <div class="form-group">
+                  <label for="email">Đánh giá</label>
+                  <input type="range" value="4" step="0.25" id="backing5">
+                  <div class="rateit" data-rateit-backingfld="#backing5" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
+                  </div>
+                </div>
+                <div class="padding-top-20">                  
+                  <button type="submit" class="btn btn-primary">Gửi</button>
+                </div>
+              </form>
+              <!-- END FORM--> 
+            </div>
+          </div>
+        </div>
+
+        <div class="sticker sticker-sale"></div>
+      </div>
+    </div>
+  </div>
+  <!-- END CONTENT -->
+</div>
+
+<!-- END SIDEBAR & CONTENT -->
+<!-- BEGIN SIMILAR PRODUCTS -->
+<div class="row margin-bottom-40">
+    
+  <!-- END SIMILAR PRODUCTS -->
+
+</div>
+<!-- Load javascripts at bottom, this will reduce page load time -->
+    <!-- BEGIN CORE PLUGINS(REQUIRED FOR ALL PAGES) -->
+    <!--[if lt IE 9]>
+    <script src="assets/plugins/respond.min.js"></script>  
+    <![endif]-->  
+    <script src="{% static 'assets/plugins/jquery.min.js' %}" type="text/javascript"></script>
+    
+    <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>      
+    
+    <!-- END CORE PLUGINS -->
+
+    <!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
+   
+    
+    <script src="{% static 'assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js' %}" type="text/javascript"></script><!-- Quantity -->
+    
+    <script src="{% static 'assets/plugins/rateit/src/jquery.rateit.js' %}" type="text/javascript"></script>
+   
+{% endblock %}

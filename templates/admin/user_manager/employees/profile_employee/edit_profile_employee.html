@@ -1,0 +1,140 @@
+{% extends 'admin/base.html' %} 
+{% load static %} 
+{% block main %}
+<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="{% url 'admin' %}">
+                            <i class="flaticon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'profile_employee' employee.id %}">Hồ sơ của tôi </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{'.'}}">Cập nhập hồ sơ </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><center><b> Cập nhập hồ sơ {{employee.fullname}} </b></center></div>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{'.'}}"  method="POST" >
+                                {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="image">Ảnh nhân viên</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-image"></i></span>
+                                            </div>
+                                            {{ form.image}} 
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fullname">Tên nhân viên</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1"><i class="far fa-user"></i></span>
+                                            </div>
+                                            {{ form.fullname}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
+                                            </div>
+                                            {{ form.email}} 
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-circle"></i></span>
+                                        </div>
+                                        {{ form.username}} 
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-shield"></i></span>
+                                            </div>
+                                            {{ form.password}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">				
+                                  
+                                    <div class="form-group">
+                                        <label for="">Giới tính</label>
+                                        {{ form.gender}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Số điện thoại</label>
+                                        <div class="input-group mb-3">
+                                          <div class="input-group-prepend">
+                                              <span class="input-group-text" id="basic-addon1"><i class="fas fa-phone"></i></span>
+                                          </div>
+                                          {{ form.phone}}
+                                      </div>
+                                    </div>
+                                        <div class="form-group">
+                                          <label for="">Địa chỉ</label>
+                                          <div class="input-group mb-3">
+                                              <div class="input-group-prepend">
+                                                  <span class="input-group-text" id="basic-addon1"><i class="far fa-address-card"></i></span>
+                                              </div>
+                                              {{ form.address}} 
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="">Chức vụ</label>
+                                          <div class="input-group mb-3">
+                                              <div class="input-group-prepend">
+                                                  <span class="input-group-text" id="basic-addon1">{% if employee.position == 'Nhân viên' %}<i class="fas fa-user-alt"></i> {% else %} <i class="fas fa-user-tie"> </i>{% endif %}</span>
+                                              </div>
+                                              {{ form.position}}
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="">Lương</label>
+                                          <div class="input-group mb-3">
+                                              <div class="input-group-prepend">
+                                                  <span class="input-group-text" id="basic-addon1"><i class="far fa-money-bill-alt"></i></span>
+                                              </div>
+                                              {{ form.salary}}
+                                          </div>
+                                      </div>
+                                </div>
+                                <div class="form-group">
+                                <input type="submit" value="Lưu" class="btn-success btn  ">
+                                <a href="{% url 'profile_employee' employee.id %}" class="btn  btn-primary">Quay lại</a>
+                            </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

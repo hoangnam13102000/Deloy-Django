@@ -1,0 +1,127 @@
+{% extends 'admin/base.html' %} 
+{% load static %} 
+{% block main %}
+<div class="main-panel">
+    <div class="content">
+    <div class="page-inner">
+        <div class="page-header">
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="{% url 'admin' %}">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                  <i class="flaticon-right-arrow"></i>
+              </li>
+              <li class="nav-item">
+                <a data-toggle="collapse" href="#product_manager">Quản lý sản phẩm</a>
+            </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'product_list' %}">Danh sách sản phẩm</a>
+              </li>
+            </ul>
+        </div>
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="table-responsive">
+            <div class="d-flex align-items-center">
+              <h4 class=" text-uppercase card-title">
+                Danh sách sản phẩm
+              </h4>
+              <a href="{% url 'add_product' %}" class="btn btn-info btn-round ml-auto"> <i class="fa fa-plus"></i> Thêm sản phẩm mới</a>
+            </div>
+        </div>
+        <div class="card-body">
+          <form action="{% url 'search_product_admin' %}" >
+            <div class="row">
+              <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h4 class=" text-uppercase ">
+                          Tìm kiếm theo:
+                    </h4>
+                  </div>
+                  <div class="col-md-8">
+                    {{search_form.search_type}}
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+              <form action="#" class="  mr-md-3">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search search-icon"></i></span>
+                  </div>
+                  <input  name="keyword" type="text" placeholder="Tìm kiếm..." class="form-control" >
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          <div class="table-responsive">
+            
+              <table
+                id="add-row"
+                class="display table table-striped table-hover"
+              >
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Hình sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Loại sản phẩm</th>
+            <th>Hãng</th>
+            <th>Giá sản phẩm</th>
+            <th>Mô tả</th>
+            <th>Trạng thái</th>
+            {% comment %} <th>Active</th> {% endcomment %}
+            <th style="width: 13%">Tùy chọn</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in  page_obj %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><img src="{% if  product.image %} {{product.image.url}} {% else %} {% static 'assets/img/404/no_image.png' %} {% endif %}" alt="..." class="img" style="width: 100px; height: 100px;"></td>
+                <td>{{ product.title }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.brand }}</td>
+                <td>{{ product.price }} VNĐ</td>
+                <td>{{ product.description }}</td>
+                <td>{% if  product.is_active == True %} Hoạt động {% else %} Khóa{% endif %}</td>
+                {% comment %} <td>{{ product.is_active }}</td> {% endcomment %}
+                <td><a href="{% url 'edit_product' product.id %}" class="btn btn-info"><span class=" glyphincon glyphicon-pencil">Sửa </span> </a>
+                    <a href="{% url 'delete_product' product.id %}" class="btn btn-danger" onclick=" return confirm('Bạn có chắc chắn muốn xóa?');">
+                        Xóa </i></a>
+                </td>
+             </tr> 
+        {% endfor %}
+    </tbody> 
+</table>
+<nav aria-label="...">
+    <ul class="pagination justify-content-center ">
+        {% if page_obj.has_previous %}
+      <li class="page-item step-links">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"> << </a>
+      </li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a></li>
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}"> >> </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+</div>
+{% endblock %}

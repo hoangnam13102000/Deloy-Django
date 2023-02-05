@@ -1,0 +1,150 @@
+{% extends 'admin/base.html' %} 
+{% load static %} 
+{% block main %}
+<div class="main-panel">
+  <div class="content">
+    <div class="page-inner">
+      <div class="page-header">
+        <ul class="breadcrumbs">
+          <li class="nav-home">
+            <a href="{% url 'admin' %}">
+              <i class="flaticon-home"></i>
+            </a>
+          </li>
+          <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+          <a data-toggle="collapse" href="#user_manager">Quản lý người dùng</a>
+      </li>
+          <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'customer_list' %}">Danh sách khách hàng</a>
+          </li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="table-responsive">
+                <div class="d-flex align-items-center">
+                  <h4 class=" text-uppercase card-title ">
+                    Danh sách khách hàng
+                  </h4>
+                  <a href="{% url 'add_user' %}" class="btn btn-info btn-round ml-auto"> <i class="fas fa-user-plus"></i> Thêm khách hàng</a>
+                </div>
+            </div>
+            <div class="card-body">
+              <form action="{% url 'search_customer' %}" >
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <h4 class=" text-uppercase ">
+                              Tìm kiếm theo:
+                        </h4>
+                      </div>
+                      <div class="col-md-8">
+                        {{search_form.search_type}}
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search search-icon"></i></span>
+                      </div>
+                      <input  name="keyword" type="text" placeholder="Tìm kiếm..." class="form-control" >
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                      </span>
+                    </div>
+                  </form>
+                </div>
+              <div class="table-responsive"> 
+        
+      <div class="table-responsive">
+        <table id="add-row" class="display table table-striped table-hover " >
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Tên khách hàng</th>
+              <th>Giới tính</th>
+              <th>Email</th>
+              <th>Số điện thoại</th>
+              <th>Địa chỉ</th>
+              <th>Username</th>
+              <th>Password</th>
+              <th>Trạng thái</th>
+              <th>Tùy chọn</th>
+            </tr>
+          </thead>
+        <thead>
+          <tr>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for customer in page_obj %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ customer.fullname }}</td>
+            <td>{% if  customer.gender  == 'Male' %} Nam {% elif  customer.gender  == 'Female' %} Nữ {% else %} None {% endif %}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.address }}</td>
+            <td>{{ customer.username }}</td>
+            <td>{{ customer.password}}</td>
+            <td>{% if  customer.is_active == True %} Hoạt động {% else %} Khóa {% endif %}</td>
+            <td>
+              <a
+                href="{% url 'edit_customer_admin' customer.id %}"
+                class="btn btn-info"
+                ><span class="glyphincon glyphicon-pencil">Sửa</span> </a
+              >
+              <a
+                href="{% url 'delete_customer' customer.id %}"
+                class="btn btn-danger"
+                onclick=" return confirm('Bạn có chắc chắn muốn xóa?');"
+                >Xóa</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+          <li class="page-item step-links">
+            <a
+              class="page-link"
+              href="?page={{ page_obj.previous_page_number }}"
+            >
+              <<
+            </a>
+          </li>
+          {% endif %}
+          <li class="page-item">
+            <a class="page-link" href="#"
+              >{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a
+            >
+          </li>
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+              >>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+  {% endblock %}
+</div>

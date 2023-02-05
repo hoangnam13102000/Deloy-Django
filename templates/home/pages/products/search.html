@@ -1,0 +1,102 @@
+{% extends 'home/base.html' %} 
+{% load static %} 
+{% block main %}
+</div>
+<div class="title-wrapper">
+  <div class="container"><div class="container-inner">
+    <h1><span>MEN</span> CATEGORY</h1>
+    <em>Over 4000 Items are available here</em>
+  </div></div>
+</div>
+
+<div class="main">
+  <div class="container">
+    <ul class="breadcrumb">
+        <li><a href="{% url 'home' %}">Trang chủ</a></li>
+        <li class="active">Tìm kiếm</li>
+    </ul>
+    <!-- BEGIN SIDEBAR & CONTENT -->
+    <div class="row margin-bottom-40">
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar col-md-3 col-sm-5">
+        <ul class="list-group margin-bottom-25 sidebar-menu">
+          {% for item in  categories %}
+          <li class="list-group-item clearfix"><a href="{% url 'product_of_category' item.id %}"><i class="fa fa-angle-right"></i>{{item.name}}</a></li>
+          {% endfor %}
+        </ul>
+        
+        <div class="sidebar-filter margin-bottom-25">
+          <h2>Lọc</h2>
+          <h3>Giá trị sản phẩm</h3>
+          <div class="checkbox-list">
+            <label><input type="checkbox"> 300 ngàn - 500 ngàn </label>
+            <label><input type="checkbox"> 500 ngàn - 1 triệu</label>
+            <label><input type="checkbox"> 1 triệu - 3 triệu</label>
+            <label><input type="checkbox"> 3 triệu - 5 triệu</label>
+            <label><input type="checkbox"> 5 triệu trở lên</label>
+          </div>
+        </div>
+      </div>
+      <!-- END SIDEBAR -->
+      <!-- BEGIN CONTENT -->
+       <!-- BEGIN CONTENT -->
+       <div class="col-md-9 col-sm-7">
+        <div class="content-search margin-bottom-20">
+          <div class="row">
+            <div class="col-md-6">
+              <h1>Kết quả tìm kiếm cho  <em>{{request.GET.keyword}}</em></h1>
+            </div>
+            <div class="col-md-6">
+              <form action="{% url 'search_products' %}">
+                <div class="input-group">
+                  <input  name="keyword" type="text" placeholder="Tiếp tục tìm kiếm" class="form-control" >
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+         <!-- BEGIN CONTENT -->
+    <!-- BEGIN PRODUCT LIST -->
+    <div class="row product-list">
+      <!-- PRODUCT ITEM START --> 
+      {% if data %}
+      {% for product in  data %}
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="product-item">
+          <div class="pi-img-wrapper">
+            <img src="{{ product.image.url }}" class="img-responsive" alt="Berry Lace Dress">
+            <div>
+              <a href="{{ product.image.url }}" class="btn btn-default fancybox-button">Hiện thị</a>
+              <a href="{% url 'product_detail' product.id %}" class="btn btn-default fancybox-fast-view">Chi tiết</a>
+            </div>
+          </div>
+          <h3><a href="{% url 'product_detail' product.id %}">{{ product.title }}</a></h3>
+          <div class="pi-price">{{ product.price }} VNĐ</div>
+          <a href="{% url 'add_to_cart' product.id %}" class="btn btn-default add2cart">Thêm vào giỏ</a>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p>Không tìm thấy sản phẩm </p>
+      {% endif%}
+      <!-- PRODUCT ITEM END -->
+      
+    </div>
+    <!-- END PRODUCT LIST -->
+        <!-- END PRODUCT LIST -->
+        <!-- BEGIN PAGINATOR -->
+        <div class="row">
+        
+        </div>
+        <!-- END PAGINATOR -->
+      </div>
+      <!-- END CONTENT -->
+    </div>
+    <!-- END SIDEBAR & CONTENT -->
+  </div>
+</div>
+{% endblock %}

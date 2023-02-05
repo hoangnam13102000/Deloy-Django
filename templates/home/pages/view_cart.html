@@ -1,0 +1,102 @@
+{% extends 'home/base.html' %}
+{% load static %} 
+{% block main %}
+<!-- BEGIN SIDEBAR & CONTENT -->
+<div class="main">
+<div class="container">
+<div class="row margin-bottom-40">
+    <!-- BEGIN CONTENT -->
+    <div class="col-md-12 col-sm-12">
+      <ul class="breadcrumb">
+        <li><a href="{% url 'home' %}">Trang chủ</a></li>
+        <li class="active"><a href="{% url 'cart' %}" >Giỏ hàng</a></li>
+    </ul>
+      {% comment %} {% if cart_item %} {% endcomment %}
+      <div class="goods-page">
+        <div class="goods-data clearfix">
+          <div class="table-wrapper-responsive">
+          <table summary="Shopping cart">
+            <tr>
+              <th class="goods-page-image">Hình </th>
+              <th class="goods-page-description">Mô tả</th>
+              <th class="goods-page-quantity">Số lượng</th>
+              <th class="goods-page-price">Giá</th>
+              <th class="goods-page-total" colspan="2">Tổng</th>
+            </tr>
+            {% for item in  cart_items %}
+            <tr>
+              <td class="goods-page-image">
+                <a href="{% url 'product_detail' item.id %}"><img src="{{item.image}}" alt="{{item.name}}"></a>
+              </td>
+              <td class="goods-page-description">
+                <h3><strong>Tên sản phẩm: </strong><a href="{% url 'product_detail' item.id %}">{{item.name}}</a></h3>
+                <p><strong>Mô tả: </strong> {{item.description}}</p>
+              </td>
+              <td class="goods-page-quantity">
+                <div class="product-quantity">
+                    <input id="product-quantity" value = "{{ item.quantity }}" type="text"  class="quantity-input form-control input-sm">
+                </div>
+              </td>
+              <td class="goods-page-price">
+                <strong>{{item.price}}</strong>
+              </td>
+              <td class="goods-page-total">
+                <strong>{{ item.total_price }}</strong>
+              </td>
+              <td class="del-goods-col">
+                <a class="del-goods" href="{% url 'remove_from_cart' item.id %}">&nbsp; </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+          <div class="shopping-total">
+            <ul>
+              <li>
+                <em>Tổng hóa đơn</em>
+                <strong class="price">{{ total }} VNĐ</strong>
+              </li>
+            </ul>
+          </div>
+          {% comment %} <a href="{% url 'clear_cart' %}" class="btn btn-danger">Xóa giỏ hàng</a> {% endcomment %}
+         </div>
+        </div> 
+        <div class="container justify-content-around">
+            <div class="row">
+                <form action="{% url 'checkout'  %}" class=" " method="POST" >
+                  {% csrf_token %}
+                    <h1 class="text-center text-uppercase h3">Thanh toán</h1>
+                    <div class="form-group">
+                      <label for="">Tên khách hàng</label>
+                      {{ form.customer_name}}
+                  </div>
+                    <div class="form-group">
+                        <label for="">Địa chỉ giao hàng</label>
+                        {{ form.shipping_address}}
+                    </div>
+                    <div class="form-group">
+                        <label for="">Số điện thoại</label>
+                        {{ form.phone_number}}
+                    </div>
+                    <div class="form-group">
+                      <label for="">Phương thức thanh toán</label>
+                      {{ form.payment_method}}
+                  </div>
+                  <div class="form-group"> 
+                    <a href="{% url 'home' %}" class="btn btn-default">Tiếp tục mua hàng <i class="fa fa-shopping-cart"></i></a>
+                    <button class="btn btn-primary" type="submit">Thanh toán <i class="fa fa-check"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+      </div>
+    {% comment %} {% else %}
+    <p>Chưa có sản phẩm trong giỏ hàng<p>
+    {% endif %}  {% endcomment %}
+    </div>
+    <!-- END CONTENT -->
+  </div>
+  <!-- END SIDEBAR & CONTENT -->
+</div>
+
+{% endblock %}
